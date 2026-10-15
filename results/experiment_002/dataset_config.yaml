@@ -1,0 +1,37 @@
+dataset:
+  name: road
+
+  path: /home/CIN/rsc8/road
+
+  train:
+    directory: ambient
+
+    files:
+      - ambient_dyno_drive_basic_long
+      - ambient_dyno_drive_basic_short
+      - ambient_dyno_drive_extended_long
+      - ambient_dyno_drive_extended_short
+      - ambient_dyno_drive_radio_infotainment
+      - ambient_dyno_drive_winter
+      - ambient_dyno_exercise_all_bits
+      - ambient_dyno_idle_radio_infotainment
+      - ambient_dyno_reverse
+      - ambient_dyno_drive_benign_anomaly
+
+  test:
+    directory: attacks
+
+    files:
+      - correlated_signal_attack_1_masquerade
+      - correlated_signal_attack_2_masquerade
+      - correlated_signal_attack_3_masquerade
+      - reverse_light_on_attack_1_masquerade
+      - reverse_light_on_attack_2_masquerade
+      - reverse_light_on_attack_3_masquerade
+      - reverse_light_off_attack_1_masquerade
+      - reverse_light_off_attack_2_masquerade
+      - reverse_light_off_attack_3_masquerade
+      - max_speedometer_attack_1_masquerade
+      - max_speedometer_attack_2_masquerade
+      - max_speedometer_attack_3_masquerade
+      - max_engine_coolant_temp_attack_masquerade

@@ -1,3 +1,4 @@
+import os
 import tensorflow as tf
 import pandas as pd
 
@@ -99,6 +100,10 @@ def train_model(model, X_train, y_train, X_val, y_val, config):
     return history
 
 def save_training_history(history, output_path):
+    os.makedirs(
+        os.path.dirname(output_path),
+        exist_ok=True
+    )
     history_data = history.history
     history_df = pd.DataFrame(history_data)
 
@@ -107,7 +112,7 @@ def save_training_history(history, output_path):
 
     history_df.to_csv(output_path)
 
-def run_training(dataset_config, model_config):
+def run_training(dataset_config, model_config, results_dir):
     """
     Execute the complete training pipeline.
     """
@@ -149,11 +154,9 @@ def run_training(dataset_config, model_config):
         model_config
     )
 
-    results_dir = model_config["results"]["directory"]
-
     save_training_history(
         history,
-        f"{results_dir}/training_history.csv"
+        os.path.join(results_dir, "training_history.csv")
     )
 
     return model, history, id_to_index, index_to_id, X_val, y_val
