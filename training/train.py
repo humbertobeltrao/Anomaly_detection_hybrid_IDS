@@ -64,13 +64,15 @@ def prepare_training_data_split(road_path, directory, filenames, n, validation_r
 
 def create_model(config, num_ids):
     """
-    Create the GRU model from the configuration.
+    Create the stacked GRU model from the configuration.
     """
 
     model = GRUModel(
         num_ids=num_ids,
         embedding_dim=config["model"]["embedding_dim"],
-        gru_units=config["model"]["gru_units"],
+        gru_units_1=config["model"]["gru_units_1"],
+        gru_units_2=config["model"]["gru_units_2"],
+        dense_units=config["model"]["dense_units"],
         dropout=config["model"]["dropout"]
     )
 

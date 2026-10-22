@@ -30,9 +30,17 @@ def objective(trial):
 	"embedding_dim",
 	[16, 32, 64, 128, 256]
     )
-    gru_units = trial.suggest_categorical(
+    gru_units_1 = trial.suggest_categorical(
 	"gru_units",
 	[32, 64, 128, 256]
+    )
+    gru_units_2 = trial.suggest_categorical(
+        "gru_units_2",
+        [32, 64, 128, 256]
+    )
+    dense_units = trial.suggest_categorical(
+        "dense_units",
+        [32, 64, 128, 256]
     )
     dropout = trial.suggest_float(
 	"dropout",
@@ -70,10 +78,12 @@ def objective(trial):
     # ========================================================
 
     model = GRUModel(
-        num_ids=len(id_to_index),
-	embedding_dim=embedding_dim,
-	gru_units=gru_units,
-	dropout=dropout
+        num_ids=num_ids,
+        embedding_dim=embedding_dim,
+        gru_units_1=gru_units_1,
+        gru_units_2=gru_units_2,
+        dense_units=dense_units,
+        dropout=dropout
     )
 
     # ========================================================
@@ -126,8 +136,8 @@ def objective(trial):
 # ============================================================
 
 study = optuna.create_study(
-    study_name="gru_hyperparameter_optimization",
-    storage="sqlite:///gru_optuna.db",
+    study_name="gru_stacked_optimization",
+    storage="sqlite:///gru_stacked_optuna.db",
     load_if_exists=True,
     direction="minimize",
     sampler=optuna.samplers.TPESampler(seed=42),
@@ -139,7 +149,7 @@ study = optuna.create_study(
 
 study.optimize(
     objective,
-    n_trials=100,
+    n_trials=10,
 )
 
 # ============================================================
@@ -171,13 +181,15 @@ model_tuned_config = {
 
     "model": {
         "embedding_dim": best_params["embedding_dim"],
-        "gru_units": best_params["gru_units"],
+        "gru_units_1": best_params["gru_units"],
+        "gru_units_2": best_params["gru_units_2"],
+        "dense_units": best_params["dense_units"],
         "dropout": best_params["dropout"]
     },
 
     "training": {
         "batch_size": best_params["batch_size"],
-        "epochs": 100,
+        "epochs": 50,
         "learning_rate": best_params["learning_rate"]
     }
 }

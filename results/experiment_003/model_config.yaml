@@ -1,0 +1,12 @@
+sliding_window:
+  n: 9
+model:
+  embedding_dim: 32
+  gru_units_1: 32
+  gru_units_2: 64
+  dense_units: 256
+  dropout: 0.30000000000000004
+training:
+  batch_size: 2048
+  epochs: 50
+  learning_rate: 0.0012238439492801751
